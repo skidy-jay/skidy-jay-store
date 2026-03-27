@@ -1,4 +1,4 @@
-import { cartCall, addCart } from "./cart.js";
+import {  addCart, cartCount  } from "./cart.js";
 
  async function fetchProducts() {
   const response = await
@@ -26,6 +26,10 @@ products.forEach((element) => {
              <h6>${element.title}</h6>
              <p>$${element.price}</p>
             </div> 
+            <div class="added added-js-${element.id}">
+              Added 
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
              <button class="btn btn-warning w-100 add-js" data-product-id="${element.id}">Add to Cart</button>
         
           </div>
@@ -34,29 +38,35 @@ products.forEach((element) => {
   
 });
 
+
+
+
 document.querySelector('.js-cont').innerHTML=html
+
 
  document.querySelectorAll('.add-js')
  .forEach((button)=>{
   button.addEventListener('click',()=>{
     let productId = button.dataset.productId
   
-    
-   
-    addCart(productId)
+    let opacity = document.querySelector(`.added-js-${productId}`)
+    opacity.classList.add('added-js')
 
-    let cartQuantity = 0;
-    cartCall.forEach((cartItem)=>{
-      cartQuantity += cartItem.quantity
-    })
-    document.querySelector('.cartquantity-js').
-    innerHTML=cartQuantity
-    console.log(cartQuantity)
+    setTimeout(()=>{
+      opacity.classList.remove('added-js');
+    }, 3000)
+     
+    addCart(productId)
+    cartCount()
   })
-})
-console.log(cartCall)
  
-}
-console.log(cartCall)
+});
+
+ 
+};
+document.addEventListener('DOMContentLoaded', ()=>{
+  cartCount()
+})
+
 
 
